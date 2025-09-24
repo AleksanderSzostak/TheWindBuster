@@ -10,6 +10,11 @@ function App() {
     <>
       <div id="main">
         <img src="src/assets/bot.png" id="bot" />
+        <div id="wholeWind">
+        <img id="wind1" class="wind" src="src/assets/wind.gif"></img>
+        <br></br>
+        <img id="wind2" class="wind" src="src/assets/wind.gif"></img>
+        </div>
         <div id="wybieranieDiv">
         <input id="wybieranie" class="sterowanie" type="range" name="wybranie"></input>
         <br></br>
@@ -25,9 +30,11 @@ function App() {
         <label id="katNatarcialabel"  htmlFor='katNatarcia'>Kąt natarcia</label>
         </div>
 
+        
        </div>
     </>
   )
+
 }
 
 export default App

@@ -3,7 +3,7 @@
   height: 100vh;
   margin: 0 auto;
   text-align: center;
-  background-image: url("src/assets/background.jpg");
+  background-image: url("src/assets/water.gif");
   background-repeat:round;
 
 }
@@ -45,4 +45,16 @@ body{
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
+}
+.wind{
+  width: 50vw;
+  height: 50vh;
+}
+#wholeWind{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%) rotate(90deg);
+  transform-origin: center;
+
 }
