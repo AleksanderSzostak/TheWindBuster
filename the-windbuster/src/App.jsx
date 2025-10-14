@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 
 function App() {
   let [count, setCount] = useState(0);
+  var [rotation,setRotation]= useState(0);
   let [speed, setSpeed] = useState(10);
   const [direction, setDirection] = useState("up"); 
   useEffect(() => {
@@ -81,7 +82,10 @@ function App() {
     <>
     
       <div id="main">
+        <div id="ship">
         <img src="src/assets/bot.png" id="bot" />
+        <div id="sailflip"><img src="src/assets/zagiel.png" id="sail"/></div>
+        </div>
         <div id="wholeWind">
         <img id="wind1" className="wind" src="src/assets/wind.gif"></img>
         <br></br>
@@ -89,7 +93,7 @@ function App() {
         </div>
 
         <div id="katNatarciaDiv">
-        <input id="katNatarcia" className="sterowanie" type="range" name="katNatarcia"></input>
+       <input id="katNatarcia" className="sterowanie" type="range" min="-91" max="90" value={rotation} onChange={e => rotateSail(e.target.value)} name="katNatarcia"></input>
         <button id="btn"></button>
         <br/>
         <br/>
@@ -103,7 +107,24 @@ function App() {
        
     </>
   )
-
+function rotateSail(value){
+    setRotation(value)
+    var sail= document.getElementById("sail");
+    var sailbox=document.getElementById("sailflip");
+    var workRotation=rotation;
+    console.log(rotation);
+    if(rotation<0){
+      console.log("flip,dammit!")
+     sailbox.style.transform="scaleY(-1)";
+     sail.style.rotate=(-1*(rotation-90)+"deg");
+     sail.style.top="44%";
+    }
+    else{
+      sail.style.rotate=((rotation-90)+"deg");
+      sailbox.style.transform="scaleY(1)";
+       sail.style.top="49%";
+    }
+  }
 }
 
 export default App
