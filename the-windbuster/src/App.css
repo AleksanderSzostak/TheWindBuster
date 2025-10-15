@@ -6,6 +6,7 @@
   background-image: url("src/assets/water.gif");
   background-repeat:round;
   animation: moveBackground 10s linear infinite;
+  background-size: cover;
 }
 
 @keyframes moveBackgroundUp {

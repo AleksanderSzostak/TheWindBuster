@@ -5,11 +5,16 @@ import { useState, useEffect, useRef } from 'react';
 
 
 function App() {
+  let flip=false;
   let [count, setCount] = useState(0);
   var [rotation,setRotation]= useState(0);
   let [speed, setSpeed] = useState(10);
   const [direction, setDirection] = useState("up"); 
+  
+  
   useEffect(() => {
+    
+   // const intervalId = setInterval(windTimer, 4000);
   setSpeed(1);
   setDirection("down");
 
@@ -39,6 +44,30 @@ function App() {
     wholeWind.style.transform = `translate(-50%, -50%) rotate(${targetRotation}deg)`;
 
   };
+  const processTimer = () =>{
+    console.log("processing!");
+    var winddir= getCurrentRotation(wholeWind);
+    switch(winddir){
+     case 0:
+       if(rotation>-40&&rotation<-20){
+        setSpeed(speed-0.5);
+       }
+       else{
+        setSpeed(speed+0.25);
+       }
+       break;
+    }
+     if(flip == true){
+      console.log("flippin");
+      windTimer();
+      flip=false;
+     }
+     else{
+      console.log("notflippin");
+      flip=true;
+     }
+     console.log(flip);
+   };
   const windTimer = () =>{
     let rotation =  getCurrentRotation(wholeWind);
     console.log("1 "+rotation);
@@ -71,11 +100,19 @@ function App() {
     rotateDiv(rotation);
     
   };
-
-  const intervalId = setInterval(windTimer, 4000);
-  return () => clearInterval(intervalId);
+  
+ 
+  const processInterval = setInterval((processTimer), 2000);
+  return () => {
+   // clearInterval(intervalId);
+    clearInterval(processInterval);
+  }
+ 
+ 
 
     }, [speed, direction]);
+
+ 
 
 
   return (
@@ -94,7 +131,6 @@ function App() {
 
         <div id="katNatarciaDiv">
        <input id="katNatarcia" className="sterowanie" type="range" min="-91" max="90" value={rotation} onChange={e => rotateSail(e.target.value)} name="katNatarcia"></input>
-        <button id="btn"></button>
         <br/>
         <br/>
         <br/>
