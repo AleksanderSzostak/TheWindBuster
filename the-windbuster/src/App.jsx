@@ -3,35 +3,36 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { useState, useEffect, useRef } from 'react';
 
-
 function App() {
-  let flip=false;
+ 
   let [count, setCount] = useState(0);
   var [rotation,setRotation]= useState(0);
   let [speed, setSpeed] = useState(10);
   const [direction, setDirection] = useState("up"); 
-  
+
   
   useEffect(() => {
-    
+    let rotateWindConvert;
    // const intervalId = setInterval(windTimer, 4000);
   setSpeed(1);
-  setDirection("down");
+  setDirection("up");
+  const main = document.getElementById("root");
 
-    const main = document.getElementById("root");
+    const gifUpdate = () => {
     main.style.animationDuration = `${speed}s`;
     if (direction === "up") {
       main.style.animationName = "moveBackgroundUp";
     } else {
       main.style.animationName = "moveBackgroundDown";
     }
+  }
 
 
 
 
 
     const wholeWind = document.getElementById('wholeWind');
-
+    const rotator = document.getElementById("rotator");
     const getCurrentRotation = (element) => {
     const style = getComputedStyle(element);
     const matrix = new DOMMatrix(style.transform);
@@ -44,9 +45,22 @@ function App() {
     wholeWind.style.transform = `translate(-50%, -50%) rotate(${targetRotation}deg)`;
 
   };
+  rotator.style.visibility = "visible";
   const processTimer = () =>{
-    console.log("processing!");
+    let windRotationConverter = parseInt(rotator.style.zIndex) + 91;
+ 
     var winddir= getCurrentRotation(wholeWind);
+    var dirdif=winddir - windRotationConverter;
+    if(dirdif>0){
+      dirdif=dirdif*-1
+    }
+   
+    console.log( );
+    if(winddir - windRotationConverter >-60 && winddir - windRotationConverter<-40){
+      console.log("nnigg")
+    }
+
+
     switch(winddir){
      case 0:
        if(rotation>-40&&rotation<-20){
@@ -56,21 +70,21 @@ function App() {
         setSpeed(speed+0.25);
        }
        break;
+    case 45:
+       break;
     }
-     if(flip == true){
-      console.log("flippin");
+     if(rotator.style.visibility == "visible"){
       windTimer();
-      flip=false;
+      rotator.style.visibility = "hidden";
      }
      else{
-      console.log("notflippin");
-      flip=true;
+      rotator.style.visibility = "visible";
+      gifUpdate();
      }
-     console.log(flip);
    };
   const windTimer = () =>{
     let rotation =  getCurrentRotation(wholeWind);
-    console.log("1 "+rotation);
+
     let direction;
     if(Math.random() <0.70){
       direction = 0;
@@ -96,10 +110,12 @@ function App() {
         rotation +=45;
       }
     }
-    console.log("2 "+rotation);
     rotateDiv(rotation);
     
   };
+  const userTimer = setInterval(() => {
+
+  })
   
  
   const processInterval = setInterval((processTimer), 2000);
@@ -137,7 +153,7 @@ function App() {
         <label id="katNatarcialabel"  htmlFor='katNatarcia'>Kąt natarcia</label>
         </div>
 
-        
+          <div id="rotator"></div>
        </div>
 
        
@@ -145,12 +161,13 @@ function App() {
   )
 function rotateSail(value){
     setRotation(value)
+    document.getElementById("rotator").style.zIndex = value;
     var sail= document.getElementById("sail");
     var sailbox=document.getElementById("sailflip");
     var workRotation=rotation;
-    console.log(rotation);
+   // console.log(rotation);
     if(rotation<0){
-      console.log("flip,dammit!")
+    //  console.log("flip,dammit!")
      sailbox.style.transform="scaleY(-1)";
      sail.style.rotate=(-1*(rotation-90)+"deg");
      sail.style.top="44%";
