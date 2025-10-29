@@ -96,5 +96,15 @@ transform: translate(-50%,-50%);
 }
 #rotator{
   visibility: hidden;
+  z-index: 0; 
+}
+#distance{
+  color:white;
+  position: absolute;
+  text-align: center;
+  left: 45%;
+}
+#cssVariable{
   z-index: 0;
+  zoom: 1;
 }

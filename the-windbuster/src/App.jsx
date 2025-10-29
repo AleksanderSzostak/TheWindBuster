@@ -3,30 +3,35 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { useState, useEffect, useRef } from 'react';
 
+sessionStorage.setItem("speed",2);
+sessionStorage.setItem("rotation",90);
+sessionStorage.setItem("distance",0);
+
 function App() {
  
   let [count, setCount] = useState(0);
   var [rotation,setRotation]= useState(0);
   let [speed, setSpeed] = useState(10);
   const [direction, setDirection] = useState("up"); 
+  
 
   
   useEffect(() => {
+    var speedVariable = document.getElementById("cssVariable");
     let rotateWindConvert;
    // const intervalId = setInterval(windTimer, 4000);
-  setSpeed(1);
+  setSpeed(10);
   setDirection("up");
   const main = document.getElementById("root");
 
     const gifUpdate = () => {
-    main.style.animationDuration = `${speed}s`;
+    main.style.animationDuration = `${sessionStorage.getItem("speed")}s`;
     if (direction === "up") {
       main.style.animationName = "moveBackgroundUp";
     } else {
       main.style.animationName = "moveBackgroundDown";
     }
   }
-
 
 
 
@@ -45,6 +50,7 @@ function App() {
     wholeWind.style.transform = `translate(-50%, -50%) rotate(${targetRotation}deg)`;
 
   };
+
   rotator.style.visibility = "visible";
   const processTimer = () =>{
     let windRotationConverter = parseInt(rotator.style.zIndex) + 91;
@@ -54,33 +60,39 @@ function App() {
     if(dirdif>0){
       dirdif=dirdif*-1
     }
-   
-    console.log( );
-    if(winddir - windRotationConverter >-60 && winddir - windRotationConverter<-40){
-      console.log("nnigg")
-    }
 
+    console.log(dirdif);
 
-    switch(winddir){
-     case 0:
-       if(rotation>-40&&rotation<-20){
-        setSpeed(speed-0.5);
-       }
-       else{
-        setSpeed(speed+0.25);
-       }
-       break;
-    case 45:
-       break;
+    if(dirdif >-80 && dirdif<-40){
+      console.log("gitgut");
+      if(sessionStorage.getItem("speed")>2){
+      sessionStorage.setItem("speed",(sessionStorage.getItem("speed")-4));
+      }
+      else{
+         sessionStorage.setItem("speed",1);
+      }
+    //  speedVariable.style.zIndex = parseInt(speedVariable.style.zIndex) - 8;
     }
+    else{
+      //console.log("gutgit");
+        sessionStorage.setItem("speed",parseInt((sessionStorage.getItem("speed")))+1);
+     // speedVariable.style.zIndex = parseInt(speedVariable.style.zIndex) - 8;
+      }
+
+    console.log(sessionStorage.getItem("speed"));
+    setSpeed(parseInt(sessionStorage.getItem("speed"))/4);
+
      if(rotator.style.visibility == "visible"){
       windTimer();
       rotator.style.visibility = "hidden";
      }
      else{
       rotator.style.visibility = "visible";
-      gifUpdate();
+      
      }
+     sessionStorage.setItem("distance",parseInt((sessionStorage.getItem("distance")))+sessionStorage.getItem("speed"));
+     document.getElementById("distance").textContent = "";
+     gifUpdate();
    };
   const windTimer = () =>{
     let rotation =  getCurrentRotation(wholeWind);
@@ -135,6 +147,7 @@ function App() {
     <>
     
       <div id="main">
+      <h1 id="distance">Distance: 0m</h1>;
         <div id="ship">
         <img src="src/assets/bot.png" id="bot" />
         <div id="sailflip"><img src="src/assets/zagiel.png" id="sail"/></div>
@@ -153,7 +166,10 @@ function App() {
         <label id="katNatarcialabel"  htmlFor='katNatarcia'>Kąt natarcia</label>
         </div>
 
-          <div id="rotator"></div>
+          <div id="rotator">
+
+            <div id="cssVariable"></div>
+          </div>
        </div>
 
        
