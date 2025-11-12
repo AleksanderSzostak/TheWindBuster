@@ -61,10 +61,10 @@ function App() {
       dirdif=dirdif*-1
     }
 
-    console.log(dirdif);
+   // console.log(dirdif);
 
     if(dirdif >-80 && dirdif<-40){
-      console.log("gitgut");
+     // console.log("gitgut");
       if(sessionStorage.getItem("speed")>2){
       sessionStorage.setItem("speed",(sessionStorage.getItem("speed")-4));
       }
@@ -79,7 +79,7 @@ function App() {
      // speedVariable.style.zIndex = parseInt(speedVariable.style.zIndex) - 8;
       }
 
-    console.log(sessionStorage.getItem("speed"));
+    //console.log(sessionStorage.getItem("speed"));
     setSpeed(parseInt(sessionStorage.getItem("speed"))/4);
 
      if(rotator.style.visibility == "visible"){
@@ -90,9 +90,12 @@ function App() {
       rotator.style.visibility = "visible";
       
      }
-     sessionStorage.setItem("distance",parseInt((sessionStorage.getItem("distance")))+sessionStorage.getItem("speed"));
-     document.getElementById("distance").textContent = "";
+     
+    // console.log(sessionStorage.getItem("distance"));
+
      gifUpdate();
+     sessionStorage.setItem("distance",parseInt((sessionStorage.getItem("distance")))+10-parseInt(sessionStorage.getItem("speed")));
+     document.getElementById("distance").textContent = "Distance: "+sessionStorage.getItem("distance")+"m";
    };
   const windTimer = () =>{
     let rotation =  getCurrentRotation(wholeWind);
